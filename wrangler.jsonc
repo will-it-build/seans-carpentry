@@ -1,0 +1,21 @@
+{
+  // Sean's Carpentry (Will It Build 003) — a static site, no server logic.
+  //
+  // Deploy:  npx wrangler deploy
+  //
+  // Assets-only Worker: there is no "main", because nothing needs to run on
+  // the server. Wrangler serves ./public directly.
+  //
+  // The custom domain below is created automatically on deploy (DNS record
+  // and certificate), since will-it-build.com is on the same Cloudflare
+  // account. Same arrangement as sirona.will-it-build.com.
+  "name": "seans-carpentry",
+  "compatibility_date": "2026-08-01",
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "seans-carpentry.will-it-build.com", "custom_domain": true }
+  ]
+}

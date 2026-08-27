@@ -2,12 +2,14 @@
 
 A site for a bespoke joinery workshop, built live for **Will It Build** — build 003.
 
+Live at **[seans-carpentry.will-it-build.com](https://seans-carpentry.will-it-build.com)**
+
 Two complete layouts ship side by side. A toggle in the footer of each switches between them.
 
 | | Layout | Idea |
 |---|---|---|
-| **01** | `index.html` | Paper-and-pencil drawing-office feel. A sticky hero where scrolling scrubs a video of a floor being laid — scroll down and the boards assemble. Cut list, four-step process, timber swatches. |
-| **02** | `alt/index.html` | Darker, editorial. A CSS-only 3D floor of ~40 generated planks flies apart as you scroll, with the real video fading in over the top once it has a frame. |
+| **01** | `public/index.html` | Paper-and-pencil drawing-office feel. A sticky hero where scrolling scrubs a video of a floor being laid — scroll down and the boards assemble. Cut list, four-step process, timber swatches. |
+| **02** | `public/alt/index.html` | Darker, editorial. A CSS-only 3D floor of ~40 generated planks flies apart as you scroll, with the real video fading in over the top once it has a frame. |
 
 ## How the scroll-scrub works
 
@@ -21,23 +23,32 @@ That is fiddly in practice, and both files guard against the same three failures
 
 Motion is damped rather than snapped (`current += (target - current) * k`), and `prefers-reduced-motion` drops the scrub entirely and shows a finished floor.
 
-## Running it
+## Running it locally
 
 Static — no build step, no dependencies beyond Google Fonts.
 
 ```bash
-python3 -m http.server 8000
+cd public && python3 -m http.server 8000
 ```
 
 Then open `http://localhost:8000`. Serve it rather than opening the file directly; `file://` blocks the video seeking.
 
+## Deploying
+
+```bash
+npx wrangler deploy
+```
+
+Assets-only Worker — `wrangler.jsonc` has no `main`, because nothing runs on the server. The custom domain is created on deploy.
+
 ## Contents
 
 ```
-index.html          version 01
-alt/index.html      version 02
-floor.mp4           hero footage, ~2.4 MB
-floor-poster.jpg    poster frame
+public/index.html          version 01
+public/alt/index.html      version 02
+public/floor.mp4           hero footage, ~2.4 MB
+public/floor-poster.jpg    poster frame
+wrangler.jsonc             Cloudflare config
 ```
 
 ---
